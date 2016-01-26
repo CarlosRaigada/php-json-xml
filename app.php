@@ -65,21 +65,15 @@
 			</form><th>";
 
 		#Getting links with xpath expression
-		$links = $entradas->xpath("//feed:entry/feed:link[@rel='enclosure']/./@href");
-		
-		#We get through the result filling an array
-        	$indice=0;
-		foreach ($links as $imagen) {
-			$array_links[$indice] = $imagen;
-			$indice++;	
-		}
+                
+                $lauthor = $entradas->xpath("//feed:entry/feed:author/feed:name");
+		$links = $entradas->xpath("//feed:entry/feed:link[@rel='enclosure']/@href");
 		
 		#We make a loop for showing the results
-		for ($i = 1; $i <= 10; $i++) {
-
-			#we add the xml data to the table creation string, navigating through the document and using the previously created array
-	    		$tabla = $tabla."<tr><td><img src=".$array_links[$i]." width='500px'></td><td width='300px'><b>Título</b><br>".$entradas->entry[$i]->title."<br><b>Autor</b></br>".$entradas->entry[$i]->author->name."</td></tr>";
-		}
+		for ($i = 0; $i < 10; $i++) {
+                  #we add the xml data to the table creation string, navigating through the document and using the previously created array
+	          $tabla = $tabla."<tr><td><a href='".$links[$i]."'><img src=".$links[$i]." width='500px'></a></td><td width='300px'><b>Título</b><br>".$entradas->entry[$i]->title."<br><b>Autor</b></br>".$entradas->entry[$i]->author->name."</td></tr>"; 	
+                }
 
 		#Finally we print the complete table	
 		echo "<table align='center'bgcolor='#F2F2F2' cellpadding='20px'>".$tabla."</table>";
